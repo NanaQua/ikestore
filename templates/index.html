@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Sir Ike Marketing Site{% endblock %}</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f8f9fa;
+        }
+
+        header {
+            background-color: #27ae60;
+            color: white;
+            padding: 20px 0;
+            text-align: center;
+        }
+
+        nav {
+            margin: 10px 0;
+        }
+
+        nav a {
+            color: white;
+            margin: 0 15px;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        nav a:hover {
+            text-decoration: underline;
+        }
+
+        #main-content {
+            padding: 20px;
+        }
+
+        #results {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .result-item {
+            background-color: white;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        .result-item img {
+            width: 100%;
+            height: auto;
+            border-radius: 8px;
+        }
+
+        footer {
+            background-color: #27ae60;
+            color: white;
+            text-align: center;
+            padding: 10px 0;
+            position: relative;
+            bottom: 0;
+            width: 100%;
+        }
+
+        .search-box {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        #searchQuery {
+            padding: 10px;
+            width: 60%;
+            max-width: 400px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            font-size: 16px;
+        }
+
+        button {
+            padding: 10px 15px;
+            background-color: #27ae60;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        button:hover {
+            background-color: #2ecc71;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Sir Ike Marketing Site</h1>
+    <nav>
+        <a href="{% url 'home' %}">Home</a>
+        <a href="#about-us">About Us</a>
+        <a href="#contact-us">Contact Us</a>
+        <a href="#upload-product">Upload Product</a>
+    </nav>
+</header>
+
+<div id="main-content">
+    <div class="search-box">
+        <input type="text" id="searchQuery" placeholder="Search for products..." />
+        <button onclick="performSearch()">Search</button>
+    </div>
+
+    <section id="products">
+        <h2>Our Products</h2>
+        <div id="results">
+            {% for product in products %}
+                <div class="result-item">
+                    <img src="{{ product.image.url }}" alt="{{ product.name }}">
+                    <h3>{{ product.name }}</h3>
+                    <p>{{ product.description }}</p>
+                    <p>Price: ${{ product.price }}</p>
+                </div>
+            {% empty %}
+                <p>No products available.</p>
+            {% endfor %}
+        </div>
+    </section>
+
+    <section id="about-us">
+        <h2>About Sir Ike</h2>
+        <p>At Sir Ike Marketing, we pride ourselves on delivering high-quality and affordable products that meet the needs of our customers...</p>
+    </section>
+
+    <section id="contact-us">
+        <h2>Contact Sir Ike</h2>
+        <p>If you would like to get in touch with Sir Ike, you can reach him through the following methods:</p>
+        <p><strong>Email:</strong> <a href="mailto:example@example.com">example@example.com</a></p>
+        <p><strong>SMS:</strong> Send a message to <strong>0247987730</strong></p>
+        <p><strong>WhatsApp:</strong > <a href="https://wa.me/0247987730">Chat with us on WhatsApp</a></p>
+    </section>
+</div>
+
+<footer>
+    <p>&copy; 2023 Sir Ike Marketing. All rights reserved.</p>
+</footer>
+
+<script>
+    function performSearch() {
+        const query = document.getElementById('searchQuery').value;
+        window.location.href = `?q=${query}`;
+    }
+</script>
+
+</body>
+</html>
